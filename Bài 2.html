@@ -3,79 +3,144 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Máy tính đơn giản</title>
+    <title>Máy tính Nova</title>
     <style>
       body {
-        font-family: Arial, sans-serif;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh;
-        background-color: #f4f4f9;
+        min-height: 100vh;
         margin: 0;
+        padding: 20px;
+        background: linear-gradient(135deg, #dbeafe, #fce7f3, #fef3c7);
       }
       .calculator {
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        width: 300px;
+        width: min(100%, 360px);
+        padding: 24px;
+        border: 1px solid rgba(255, 255, 255, 0.8);
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0.82);
+        box-shadow: 0 24px 60px rgba(30, 41, 59, 0.2);
+        backdrop-filter: blur(12px);
+      }
+      .calculator-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+      }
+      .calculator-header h1 {
+        margin: 0;
+        color: #1e293b;
+        font-size: 1.45rem;
+      }
+      .calculator-header span {
+        color: #64748b;
+        font-size: 0.78rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
       }
       .display {
-        background-color: #222;
-        color: #0f0;
-        font-size: 2em;
+        min-height: 76px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        overflow-wrap: anywhere;
+        padding: 12px 16px;
+        border-radius: 16px;
+        background: #172033;
+        color: #f8fafc;
+        font-size: 2.25rem;
+        font-weight: 700;
         text-align: right;
-        padding: 10px;
-        border-radius: 5px;
-        margin-bottom: 20px;
-        min-height: 40px;
-        word-wrap: break-word;
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+        margin-bottom: 18px;
       }
       .buttons {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        gap: 10px;
+        gap: 12px;
       }
       button {
-        padding: 15px;
-        font-size: 1.2em;
+        min-height: 54px;
+        padding: 12px;
+        font-size: 1.1rem;
+        font-weight: 700;
         border: none;
-        border-radius: 5px;
+        border-radius: 14px;
         cursor: pointer;
-        background-color: #e0e0e0;
-        transition: background-color 0.2s;
+        color: #334155;
+        background-color: #e2e8f0;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s,
+          background-color 0.2s;
       }
       button:hover {
-        background-color: #d0d0d0;
+        background-color: #cbd5e1;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 16px rgba(51, 65, 85, 0.14);
+      }
+      button:focus-visible {
+        outline: 3px solid #93c5fd;
+        outline-offset: 2px;
       }
       .operator {
-        background-color: #ff9800;
+        background-color: #f97316;
         color: white;
       }
       .operator:hover {
-        background-color: #e68a00;
+        background-color: #ea580c;
       }
       .clear {
         grid-column: span 4;
-        background-color: #f44336;
+        background-color: #ef4444;
         color: white;
         font-weight: bold;
       }
       .clear:hover {
-        background-color: #da190b;
+        background-color: #dc2626;
       }
       .equal {
-        background-color: #4caf50;
+        background-color: #16a34a;
         color: white;
       }
       .equal:hover {
-        background-color: #45a049;
+        background-color: #15803d;
+      }
+      .backspace {
+        background-color: #c084fc;
+        color: white;
+      }
+      .backspace:hover {
+        background-color: #a855f7;
+      }
+      .hint {
+        margin: 16px 0 0;
+        color: #64748b;
+        text-align: center;
+        font-size: 0.82rem;
+      }
+      @media (max-width: 420px) {
+        body {
+          padding: 12px;
+        }
+        .calculator {
+          padding: 18px;
+        }
+        .display {
+          font-size: 1.85rem;
+        }
       }
     </style>
   </head>
   <body>
     <div class="calculator">
+      <div class="calculator-header">
+        <h1>Máy tính Nova</h1>
+        <span>Basic</span>
+      </div>
       <div id="display" class="display">0</div>
 
       <div class="buttons">
@@ -99,47 +164,130 @@
         <button class="btn equal">=</button>
         <button class="btn operator">+</button>
 
+        <button class="btn backspace" aria-label="Xóa ký tự cuối">⌫</button>
         <button class="btn clear">Clear</button>
       </div>
+      <p class="hint">Bạn có thể dùng cả bàn phím để tính toán</p>
     </div>
 
     <script>
       const display = document.getElementById("display");
       const buttons = document.querySelectorAll(".btn");
+      const operators = ["+", "-", "*", "/"];
+
+      function calculate(expression) {
+        const tokens = expression.match(/(?:\d+(?:\.\d*)?|\.\d+)|[+\-*/]/g);
+
+        if (
+          !tokens ||
+          tokens.join("") !== expression ||
+          operators.includes(tokens[0])
+        ) {
+          throw new Error("Biểu thức không hợp lệ");
+        }
+
+        const numbers = [Number(tokens[0])];
+
+        for (let index = 1; index < tokens.length; index += 2) {
+          const operator = tokens[index];
+          const number = Number(tokens[index + 1]);
+
+          if (!operators.includes(operator) || Number.isNaN(number)) {
+            throw new Error("Biểu thức không hợp lệ");
+          }
+
+          if (operator === "*") {
+            numbers[numbers.length - 1] *= number;
+          } else if (operator === "/") {
+            if (number === 0) {
+              throw new Error("Không thể chia cho 0");
+            }
+            numbers[numbers.length - 1] /= number;
+          } else {
+            numbers.push(operator === "+" ? number : -number);
+          }
+        }
+
+        return numbers.reduce((total, number) => total + number, 0);
+      }
+
+      function appendValue(value) {
+        const currentText = display.innerText;
+
+        if (currentText === "Lỗi") {
+          display.innerText = operators.includes(value) ? "0" + value : value;
+          return;
+        }
+
+        if (operators.includes(value)) {
+          if (operators.includes(currentText.slice(-1))) {
+            display.innerText = currentText.slice(0, -1) + value;
+          } else {
+            display.innerText += value;
+          }
+          return;
+        }
+
+        if (value === ".") {
+          const currentNumber = currentText.split(/[+\-*/]/).pop();
+          if (currentNumber.includes(".")) {
+            return;
+          }
+        }
+
+        display.innerText = currentText === "0" ? value : currentText + value;
+      }
+
+      function resetCalculator() {
+        display.innerText = "0";
+      }
+
+      function deleteLastCharacter() {
+        display.innerText =
+          display.innerText.length > 1 ? display.innerText.slice(0, -1) : "0";
+      }
+
+      function showResult() {
+        try {
+          const result = calculate(display.innerText);
+          display.innerText = Number.isFinite(result) ? String(result) : "Lỗi";
+        } catch (error) {
+          display.innerText = "Lỗi";
+        }
+      }
 
       buttons.forEach((button) => {
         button.addEventListener("click", function () {
           const value = this.innerText;
-          const currentText = display.innerText;
 
           if (value === "Clear") {
-            display.innerText = "0";
+            resetCalculator();
+          } else if (value === "⌫") {
+            deleteLastCharacter();
           } else if (value === "=") {
-            try {
-              if (currentText !== "Lỗi" && currentText !== "NaN") {
-                const result = eval(currentText);
-
-                if (!isFinite(result)) {
-                  display.innerText = "Lỗi";
-                } else {
-                  display.innerText = result;
-                }
-              }
-            } catch (error) {
-              display.innerText = "Lỗi";
-            }
+            showResult();
           } else {
-            if (currentText === "0" || currentText === "Lỗi") {
-              if (["+", "-", "*", "/"].includes(value)) {
-                display.innerText += value;
-              } else {
-                display.innerText = value;
-              }
-            } else {
-              display.innerText += value;
-            }
+            appendValue(value);
           }
         });
+      });
+
+      document.addEventListener("keydown", function (event) {
+        const key = event.key;
+
+        if (/\d|\./.test(key) || operators.includes(key)) {
+          appendValue(key);
+        } else if (key === "Enter" || key === "=") {
+          showResult();
+        } else if (key === "Backspace") {
+          deleteLastCharacter();
+        } else if (key === "Escape") {
+          resetCalculator();
+        } else {
+          return;
+        }
+
+        event.preventDefault();
       });
     </script>
   </body>
