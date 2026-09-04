@@ -1,0 +1,500 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hai bài thực hành</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #d8d8d6;
+        color: #2f2f2f;
+      }
+
+      .sheet {
+        width: min(1180px, 90vw);
+        margin: 40px auto;
+        background: #f4f2ef;
+        border: 1px solid #d9d3c8;
+        padding: 30px 40px 20px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        position: relative;
+      }
+
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 18px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 12px;
+        color: #4d4d4d;
+        font-weight: 700;
+      }
+
+      .brand-mark {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #f64949, #d31919);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 12px;
+        font-weight: bold;
+      }
+
+      .brand small {
+        display: block;
+        font-size: 10px;
+        font-weight: 500;
+        letter-spacing: 0.3px;
+        color: #757575;
+      }
+
+      .mini-logo {
+        width: 46px;
+        height: 46px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #4b4ce7, #2d2e92);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+        box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.2);
+      }
+
+      h2 {
+        margin: 0;
+        font-weight: 700;
+        font-size: 15px;
+        letter-spacing: 0.5px;
+        color: #3f3f3f;
+        text-transform: uppercase;
+      }
+
+      .title {
+        margin: 8px 0 22px;
+        font-size: clamp(28px, 2.8vw, 48px);
+        font-weight: 700;
+        color: #2f2f2f;
+      }
+
+      .exercise {
+        padding: 18px 0 0;
+      }
+
+      .exercise + .exercise {
+        margin-top: 26px;
+        border-top: 1px solid rgba(0, 0, 0, 0.15);
+        padding-top: 30px;
+      }
+
+      .task-head {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 16px;
+        color: #3a3a3a;
+        font-size: 18px;
+      }
+
+      .task-icon {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: #ee5b4f;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        font-weight: bold;
+      }
+
+      .task-list {
+        margin: 0;
+        padding-left: 28px;
+        font-size: 18px;
+        line-height: 1.8;
+        color: #2a2a2a;
+      }
+
+      .task-list li {
+        margin: 4px 0;
+      }
+
+      .highlight {
+        color: #e84141;
+        font-weight: 700;
+      }
+
+      .note {
+        margin-top: 26px;
+        padding-top: 18px;
+        border-top: 1px solid rgba(0, 0, 0, 0.25);
+        font-size: 18px;
+        color: #d75757;
+        font-style: italic;
+      }
+
+      .intro-panel {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        padding: 0 12px 0 0;
+      }
+
+      .control-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .color-btn {
+        background: #f0554d;
+        color: #fff;
+        border: none;
+        border-radius: 50px;
+        padding: 10px 18px;
+        font-size: 16px;
+        font-weight: 700;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(240, 85, 77, 0.25);
+        transition: transform 0.2s ease;
+      }
+
+      .color-btn:hover {
+        transform: translateY(-1px);
+      }
+
+      .greeting-box {
+        min-height: 50px;
+        display: flex;
+        align-items: center;
+        font-size: 20px;
+        color: #1f1f1f;
+        background: rgba(255, 255, 255, 0.3);
+        padding: 10px 14px;
+        border-radius: 12px;
+        border: 1px solid rgba(0, 0, 0, 0.08);
+      }
+
+      .calculator-box {
+        width: min(480px, 100%);
+        margin: 18px auto 0;
+        background: #f6f6f6;
+        border: 1px solid #d0d0d0;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        padding: 18px;
+      }
+
+      .calculator-screen {
+        width: 100%;
+        min-height: 72px;
+        background: #fff;
+        border: 1px solid #d5d5d5;
+        border-radius: 10px;
+        margin-bottom: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding: 0 18px;
+        font-size: clamp(28px, 4vw, 42px);
+        font-weight: 700;
+        color: #2f2f2f;
+        overflow: hidden;
+      }
+
+      .btn-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .calc-btn {
+        border: none;
+        border-radius: 12px;
+        height: 58px;
+        font-size: 22px;
+        font-weight: 700;
+        cursor: pointer;
+        color: #1e1e1e;
+        background: #e8e8e8;
+        transition: 0.2s;
+      }
+
+      .calc-btn:hover {
+        filter: brightness(0.97);
+      }
+
+      .calc-btn.operator {
+        background: #ffb38a;
+      }
+
+      .calc-btn.equal {
+        background: #4a8af4;
+        color: white;
+        grid-column: span 2;
+      }
+
+      .calc-btn.clear {
+        background: #f78e8e;
+        color: white;
+      }
+
+      @media (max-width: 720px) {
+        .sheet {
+          padding: 20px 18px 16px;
+        }
+
+        .title {
+          font-size: 26px;
+        }
+
+        .task-list {
+          font-size: 16px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sheet">
+      <div class="topbar">
+        <div class="brand">
+          <span class="brand-mark">✦</span>
+          <div>
+            HỌC VIỆN CÔNG NGHỆ BƯU CHÍNH VIỄN THÔNG
+            <small>Posts and Telecommunications Institute of Technology</small>
+          </div>
+        </div>
+        <div class="mini-logo">R</div>
+      </div>
+
+      <section class="exercise">
+        <h2>Thực hành</h2>
+        <div class="title">Bài tập thực hành 1: Trang giới thiệu tương tác</div>
+
+        <div class="intro-panel">
+          <div class="task-head">
+            <span class="task-icon">☰</span>
+            <span>Yêu cầu:</span>
+          </div>
+
+          <ul class="task-list">
+            <li>
+              Tạo trang cá nhân với cấu trúc HTML gồm header, nav, main, footer.
+            </li>
+            <li>
+              Thêm 1 nút bấm <span class="highlight">“Đổi màu nền”</span>. Dùng
+              JavaScript <strong>addEventListener</strong> để đổi màu nền trang.
+            </li>
+            <li>
+              Thêm 1 đoạn văn bản chào mừng, dùng đối tượng
+              <strong>Date</strong> để hiển thị lời chào theo buổi
+              (sáng/chiều/tối) khi trang được tải.
+            </li>
+            <li>
+              Sử dụng <strong>document.getElementById()</strong> và
+              <strong>.innerText</strong> / <strong>.style</strong> để thao tác
+              DOM.
+            </li>
+          </ul>
+
+          <div class="control-row">
+            <button id="colorButton" class="color-btn" type="button">
+              Đổi màu nền
+            </button>
+            <div id="greeting" class="greeting-box">Đang tải lời chào...</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="exercise">
+        <h2>Thực hành</h2>
+        <div class="title">
+          Bài tập thực hành 2: Máy tính đơn giản (Calculator)
+        </div>
+
+        <div class="task-head">
+          <span class="task-icon">☰</span>
+          <span>Yêu cầu:</span>
+        </div>
+
+        <ul class="task-list">
+          <li>
+            Giao diện đơn giản (HTML/CSS): 1 màn hình hiển thị, 1 nút bấm cho
+            từng phép toán.
+          </li>
+          <li>
+            Lắng nghe sự kiện click trên tất cả nút bấm bằng
+            <strong>addEventListener</strong>.
+          </li>
+          <li>Khi bấm số: nối số vào màn hình hiển thị.</li>
+          <li>
+            Khi bấm <span class="highlight">Clear</span>: đặt lại màn hình giá
+            trị <strong>0</strong>.
+          </li>
+          <li>
+            Khi bấm <span class="highlight">=</span>: tính toán biểu thức hiện
+            tại.
+          </li>
+        </ul>
+
+        <div class="calculator-box">
+          <div id="screen" class="calculator-screen">0</div>
+          <div class="btn-grid">
+            <button class="calc-btn clear" data-action="clear" type="button">
+              C
+            </button>
+            <button class="calc-btn operator" data-value="/" type="button">
+              ÷
+            </button>
+            <button class="calc-btn operator" data-value="*" type="button">
+              ×
+            </button>
+            <button class="calc-btn operator" data-value="-" type="button">
+              −
+            </button>
+
+            <button class="calc-btn" data-value="7" type="button">7</button>
+            <button class="calc-btn" data-value="8" type="button">8</button>
+            <button class="calc-btn" data-value="9" type="button">9</button>
+            <button class="calc-btn operator" data-value="+" type="button">
+              +
+            </button>
+
+            <button class="calc-btn" data-value="4" type="button">4</button>
+            <button class="calc-btn" data-value="5" type="button">5</button>
+            <button class="calc-btn" data-value="6" type="button">6</button>
+            <button class="calc-btn" data-value="." type="button">.</button>
+
+            <button class="calc-btn" data-value="1" type="button">1</button>
+            <button class="calc-btn" data-value="2" type="button">2</button>
+            <button class="calc-btn" data-value="3" type="button">3</button>
+            <button
+              class="calc-btn equal"
+              data-action="calculate"
+              type="button"
+            >
+              =
+            </button>
+
+            <button
+              class="calc-btn"
+              data-value="0"
+              type="button"
+              style="grid-column: span 2"
+            >
+              0
+            </button>
+            <button class="calc-btn" data-value="00" type="button">00</button>
+          </div>
+        </div>
+      </section>
+
+      <div class="note">
+        Lưu ý: kết hợp lại toàn bộ bài với Dark Mode Toggle để slide được hoàn
+        thiện bài tập.
+      </div>
+    </div>
+
+    <script>
+      // Bài 1: Đổi màu nền và hiển thị lời chào theo buổi
+      const body = document.body;
+      const colorButton = document.getElementById("colorButton");
+      const greetingText = document.getElementById("greeting");
+
+      const colors = ["#f4f2ef", "#dfeaf8", "#f4e8d8", "#e8f4e8", "#f8e9f4"];
+      let colorIndex = 0;
+
+      colorButton.addEventListener("click", function () {
+        colorIndex = (colorIndex + 1) % colors.length;
+        body.style.background = colors[colorIndex];
+      });
+
+      const hour = new Date().getHours();
+      let greeting = "Chào bạn!";
+
+      if (hour < 12) greeting = "Chào buổi sáng!";
+      else if (hour < 18) greeting = "Chào buổi chiều!";
+      else greeting = "Chào buổi tối!";
+
+      greetingText.innerText =
+        greeting + " Hôm nay là ngày mới và bạn thật tuyệt vời.";
+
+      // Bài 2: Máy tính đơn giản
+      const screen = document.getElementById("screen");
+      const buttons = document.querySelectorAll(".calc-btn");
+      let expression = "0";
+
+      function updateScreen(value) {
+        screen.innerText = value;
+      }
+
+      function appendValue(value) {
+        if (expression === "0" && !["+", "-", "*", "/", "."].includes(value)) {
+          expression = value;
+        } else {
+          expression += value;
+        }
+        updateScreen(expression);
+      }
+
+      function calculateExpression() {
+        try {
+          const safeExpression = expression
+            .replace(/×/g, "*")
+            .replace(/÷/g, "/");
+          const result = Function(
+            '"use strict"; return (' + safeExpression + ")",
+          )();
+          if (!Number.isFinite(result)) {
+            expression = "0";
+          } else {
+            expression = String(result);
+          }
+        } catch (error) {
+          expression = "0";
+        }
+        updateScreen(expression);
+      }
+
+      buttons.forEach(function (button) {
+        button.addEventListener("click", function () {
+          const value = button.dataset.value;
+          const action = button.dataset.action;
+
+          if (action === "clear") {
+            expression = "0";
+            updateScreen(expression);
+            return;
+          }
+
+          if (action === "calculate") {
+            calculateExpression();
+            return;
+          }
+
+          if (value) {
+            appendValue(value);
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
