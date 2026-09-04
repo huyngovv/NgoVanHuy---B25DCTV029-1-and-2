@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trang giới thiệu tương tác</title>
+    <style>
+      /* CSS cơ bản để trang trông gọn gàng hơn */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        /* Thêm hiệu ứng chuyển đổi màu mượt mà */
+        transition:
+          background-color 0.3s,
+          color 0.3s;
+      }
+      header,
+      footer {
+        background-color: #e9ecef;
+        padding: 20px;
+        text-align: center;
+        color: #333;
+      }
+      nav {
+        background-color: #343a40;
+        overflow: hidden;
+      }
+      nav a {
+        float: left;
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+      }
+      nav a:hover {
+        background-color: #ddd;
+        color: black;
+      }
+      main {
+        padding: 40px 20px;
+        min-height: 300px;
+        text-align: center;
+      }
+      button {
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        margin-top: 20px;
+      }
+      button:hover {
+        background-color: #0056b3;
+      }
+      /* Class dùng để kích hoạt Dark Mode bằng JS */
+      .dark-mode-header-footer {
+        background-color: #1a1a1a !important;
+        color: white !important;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Yêu cầu 1: Cấu trúc HTML gồm header, nav, main, footer -->
+    <header id="myHeader">
+      <h1>Trang Cá Nhân Của Tôi</h1>
+    </header>
+
+    <nav>
+      <a href="#">Trang chủ</a>
+      <a href="#">Giới thiệu</a>
+      <a href="#">Sở thích</a>
+    </nav>
+
+    <main id="myMain">
+      <!-- Vùng hiển thị lời chào -->
+      <h2 id="welcomeMessage">Đang tải lời chào...</h2>
+      <p>Chào mừng bạn đến với trang giới thiệu tương tác.</p>
+
+      <!-- Yêu cầu 2: Nút bấm Đổi màu nền -->
+      <button id="colorButton">Đổi màu nền (Dark Mode)</button>
+    </main>
+
+    <footer id="myFooter">
+      <p>Ngô Văn Huy _ B25DCTV029. Bài tập thực hành DOM.</p>
+    </footer>
+
+    <!-- Viết JavaScript ở cuối body -->
+    <script>
+      // --- YÊU CẦU 3 & 4: Hiển thị lời chào theo buổi dùng đối tượng Date và innerText ---
+      const welcomeMessageElement = document.getElementById("welcomeMessage");
+      const currentHour = new Date().getHours();
+
+      let greeting = "";
+      if (currentHour < 12) {
+        greeting = "Chào buổi sáng! Chúc bạn ngày mới tốt lành.";
+      } else if (currentHour < 18) {
+        greeting = "Chào buổi chiều! Chúc bạn làm việc hiệu quả.";
+      } else {
+        greeting = "Chào buổi tối! Chúc bạn một buổi tối thư giãn.";
+      }
+
+      // Gắn chuỗi lời chào vào thẻ h2
+      welcomeMessageElement.innerText = greeting;
+
+      // --- YÊU CẦU 2 & 4: Đổi màu nền trang khi nhấn nút dùng addEventListener và .style ---
+      const colorButton = document.getElementById("colorButton");
+      const header = document.getElementById("myHeader");
+      const footer = document.getElementById("myFooter");
+
+      let isDarkMode = false;
+
+      colorButton.addEventListener("click", function () {
+        if (!isDarkMode) {
+          // Chuyển sang nền tối (Dark Mode)
+          document.body.style.backgroundColor = "#222";
+          document.body.style.color = "#fff";
+          header.classList.add("dark-mode-header-footer");
+          footer.classList.add("dark-mode-header-footer");
+          colorButton.innerText = "Trở về nền sáng";
+        } else {
+          // Trở về nền sáng
+          document.body.style.backgroundColor = "#fff";
+          document.body.style.color = "#000";
+          header.classList.remove("dark-mode-header-footer");
+          footer.classList.remove("dark-mode-header-footer");
+          colorButton.innerText = "Đổi màu nền (Dark Mode)";
+        }
+        // Đảo ngược trạng thái
+        isDarkMode = !isDarkMode;
+      });
+    </script>
+  </body>
+</html>
