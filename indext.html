@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Máy tính đơn giản</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f4f4f9;
+        margin: 0;
+      }
+      .calculator {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        width: 300px;
+      }
+      .display {
+        background-color: #222;
+        color: #0f0;
+        font-size: 2em;
+        text-align: right;
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        min-height: 40px;
+        word-wrap: break-word;
+      }
+      .buttons {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+      }
+      button {
+        padding: 15px;
+        font-size: 1.2em;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        background-color: #e0e0e0;
+        transition: background-color 0.2s;
+      }
+      button:hover {
+        background-color: #d0d0d0;
+      }
+      .operator {
+        background-color: #ff9800;
+        color: white;
+      }
+      .operator:hover {
+        background-color: #e68a00;
+      }
+      .clear {
+        grid-column: span 4;
+        background-color: #f44336;
+        color: white;
+        font-weight: bold;
+      }
+      .clear:hover {
+        background-color: #da190b;
+      }
+      .equal {
+        background-color: #4caf50;
+        color: white;
+      }
+      .equal:hover {
+        background-color: #45a049;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="calculator">
+      <div id="display" class="display">0</div>
+
+      <div class="buttons">
+        <button class="btn">7</button>
+        <button class="btn">8</button>
+        <button class="btn">9</button>
+        <button class="btn operator">/</button>
+
+        <button class="btn">4</button>
+        <button class="btn">5</button>
+        <button class="btn">6</button>
+        <button class="btn operator">*</button>
+
+        <button class="btn">1</button>
+        <button class="btn">2</button>
+        <button class="btn">3</button>
+        <button class="btn operator">-</button>
+
+        <button class="btn">0</button>
+        <button class="btn">.</button>
+        <button class="btn equal">=</button>
+        <button class="btn operator">+</button>
+
+        <button class="btn clear">Clear</button>
+      </div>
+    </div>
+
+    <script>
+      const display = document.getElementById("display");
+      const buttons = document.querySelectorAll(".btn");
+
+      buttons.forEach((button) => {
+        button.addEventListener("click", function () {
+          const value = this.innerText;
+          const currentText = display.innerText;
+
+          if (value === "Clear") {
+            display.innerText = "0";
+          } else if (value === "=") {
+            try {
+              if (currentText !== "Lỗi" && currentText !== "NaN") {
+                const result = eval(currentText);
+
+                if (!isFinite(result)) {
+                  display.innerText = "Lỗi";
+                } else {
+                  display.innerText = result;
+                }
+              }
+            } catch (error) {
+              display.innerText = "Lỗi";
+            }
+          } else {
+            if (currentText === "0" || currentText === "Lỗi") {
+              if (["+", "-", "*", "/"].includes(value)) {
+                display.innerText += value;
+              } else {
+                display.innerText = value;
+              }
+            } else {
+              display.innerText += value;
+            }
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
