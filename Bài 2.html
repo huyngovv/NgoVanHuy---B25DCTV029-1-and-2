@@ -2,292 +2,217 @@
 <html lang="vi">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Máy tính Nova</title>
+    <title>Bài Thực Hành 2 - Máy Tính Đơn Giản</title>
     <style>
       body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f4f7f6;
         display: flex;
         justify-content: center;
         align-items: center;
-        min-height: 100vh;
+        height: 100vh;
         margin: 0;
-        padding: 20px;
-        background: linear-gradient(135deg, #dbeafe, #fce7f3, #fef3c7);
       }
+
       .calculator {
-        width: min(100%, 360px);
-        padding: 24px;
-        border: 1px solid rgba(255, 255, 255, 0.8);
-        border-radius: 24px;
-        background: rgba(255, 255, 255, 0.82);
-        box-shadow: 0 24px 60px rgba(30, 41, 59, 0.2);
-        backdrop-filter: blur(12px);
+        width: 320px;
+        background-color: #ffffff;
+        border: 1px solid #dcdfe6;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
       }
-      .calculator-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 16px;
+
+      .calculator h3 {
+        text-align: center;
+        margin: 0 0 15px 0;
+        color: #0066cc;
+        font-size: 1.1rem;
       }
-      .calculator-header h1 {
-        margin: 0;
-        color: #1e293b;
-        font-size: 1.45rem;
-      }
-      .calculator-header span {
-        color: #64748b;
-        font-size: 0.78rem;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-      }
-      .display {
-        min-height: 76px;
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        overflow-wrap: anywhere;
-        padding: 12px 16px;
-        border-radius: 16px;
-        background: #172033;
-        color: #f8fafc;
-        font-size: 2.25rem;
-        font-weight: 700;
+
+      #display {
+        width: 100%;
+        height: 60px;
+        background-color: #222222;
+        color: #00ff66;
+        font-size: 26px;
+        font-family: "Courier New", Courier, monospace;
         text-align: right;
-        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
-        margin-bottom: 18px;
+        line-height: 60px;
+        padding: 0 15px;
+        box-sizing: border-box;
+        border-radius: 6px;
+        margin-bottom: 20px;
+        overflow: hidden;
+        word-break: break-all;
       }
-      .buttons {
+
+      .buttons-grid {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        gap: 12px;
+        gap: 10px;
       }
+
       button {
-        min-height: 54px;
-        padding: 12px;
-        font-size: 1.1rem;
-        font-weight: 700;
-        border: none;
-        border-radius: 14px;
-        cursor: pointer;
-        color: #334155;
-        background-color: #e2e8f0;
-        transition:
-          transform 0.2s,
-          box-shadow 0.2s,
-          background-color 0.2s;
-      }
-      button:hover {
-        background-color: #cbd5e1;
-        transform: translateY(-2px);
-        box-shadow: 0 8px 16px rgba(51, 65, 85, 0.14);
-      }
-      button:focus-visible {
-        outline: 3px solid #93c5fd;
-        outline-offset: 2px;
-      }
-      .operator {
-        background-color: #f97316;
-        color: white;
-      }
-      .operator:hover {
-        background-color: #ea580c;
-      }
-      .clear {
-        grid-column: span 4;
-        background-color: #ef4444;
-        color: white;
+        height: 50px;
+        font-size: 18px;
         font-weight: bold;
+        border: 1px solid #dcdfe6;
+        border-radius: 6px;
+        background-color: #f8fafc;
+        color: #333333;
+        cursor: pointer;
+        transition: 0.15s;
       }
-      .clear:hover {
-        background-color: #dc2626;
+
+      button:hover {
+        background-color: #e2e8f0;
       }
-      .equal {
-        background-color: #16a34a;
+
+      button.operator {
+        background-color: #ff9800;
         color: white;
+        border: none;
       }
-      .equal:hover {
-        background-color: #15803d;
+
+      button.operator:hover {
+        background-color: #e68900;
       }
-      .backspace {
-        background-color: #c084fc;
+
+      /* Nút Clear xóa toàn bộ */
+      button#btnClear {
+        background-color: #f44336;
         color: white;
+        border: none;
       }
-      .backspace:hover {
-        background-color: #a855f7;
+
+      button#btnClear:hover {
+        background-color: #d32f2f;
       }
-      .hint {
-        margin: 16px 0 0;
-        color: #64748b;
-        text-align: center;
-        font-size: 0.82rem;
+
+      /* Nút Delete xóa từng ký tự */
+      button#btnDelete {
+        background-color: #64748b;
+        color: white;
+        border: none;
       }
-      @media (max-width: 420px) {
-        body {
-          padding: 12px;
-        }
-        .calculator {
-          padding: 18px;
-        }
-        .display {
-          font-size: 1.85rem;
-        }
+
+      button#btnDelete:hover {
+        background-color: #475569;
+      }
+
+      /* Nút Bằng (=) */
+      button#btnEqual {
+        background-color: #0066cc;
+        color: white;
+        border: none;
+        grid-column: span 2;
+      }
+
+      button#btnEqual:hover {
+        background-color: #0052a3;
       }
     </style>
   </head>
   <body>
     <div class="calculator">
-      <div class="calculator-header">
-        <h1>Máy tính Nova</h1>
-        <span>Basic</span>
+      <h3>MÁY TÍNH CÁ NHÂN</h3>
+
+      <div id="display">0</div>
+
+      <div class="buttons-grid">
+        <!-- Hàng 1: Nút Clear và Nút DEL xóa từng số -->
+        <button id="btnClear">Clear</button>
+        <button id="btnDelete">DEL</button>
+        <button class="btn-input operator">/</button>
+        <button class="btn-input operator">*</button>
+
+        <!-- Hàng 2 -->
+        <button class="btn-input">7</button>
+        <button class="btn-input">8</button>
+        <button class="btn-input">9</button>
+        <button class="btn-input operator">-</button>
+
+        <!-- Hàng 3 -->
+        <button class="btn-input">4</button>
+        <button class="btn-input">5</button>
+        <button class="btn-input">6</button>
+        <button class="btn-input operator">+</button>
+
+        <!-- Hàng 4 -->
+        <button class="btn-input">1</button>
+        <button class="btn-input">2</button>
+        <button class="btn-input">3</button>
+        <button class="btn-input">.</button>
+
+        <!-- Hàng 5 -->
+        <button class="btn-input" style="grid-column: span 2">0</button>
+        <button id="btnEqual">=</button>
       </div>
-      <div id="display" class="display">0</div>
-
-      <div class="buttons">
-        <button class="btn">7</button>
-        <button class="btn">8</button>
-        <button class="btn">9</button>
-        <button class="btn operator">/</button>
-
-        <button class="btn">4</button>
-        <button class="btn">5</button>
-        <button class="btn">6</button>
-        <button class="btn operator">*</button>
-
-        <button class="btn">1</button>
-        <button class="btn">2</button>
-        <button class="btn">3</button>
-        <button class="btn operator">-</button>
-
-        <button class="btn">0</button>
-        <button class="btn">.</button>
-        <button class="btn equal">=</button>
-        <button class="btn operator">+</button>
-
-        <button class="btn backspace" aria-label="Xóa ký tự cuối">⌫</button>
-        <button class="btn clear">Clear</button>
-      </div>
-      <p class="hint">Bạn có thể dùng cả bàn phím để tính toán</p>
     </div>
 
     <script>
       const display = document.getElementById("display");
-      const buttons = document.querySelectorAll(".btn");
-      const operators = ["+", "-", "*", "/"];
+      const inputButtons = document.querySelectorAll(".btn-input");
+      const btnClear = document.getElementById("btnClear");
+      const btnDelete = document.getElementById("btnDelete");
+      const btnEqual = document.getElementById("btnEqual");
 
-      function calculate(expression) {
-        const tokens = expression.match(/(?:\d+(?:\.\d*)?|\.\d+)|[+\-*/]/g);
-
-        if (
-          !tokens ||
-          tokens.join("") !== expression ||
-          operators.includes(tokens[0])
-        ) {
-          throw new Error("Biểu thức không hợp lệ");
-        }
-
-        const numbers = [Number(tokens[0])];
-
-        for (let index = 1; index < tokens.length; index += 2) {
-          const operator = tokens[index];
-          const number = Number(tokens[index + 1]);
-
-          if (!operators.includes(operator) || Number.isNaN(number)) {
-            throw new Error("Biểu thức không hợp lệ");
-          }
-
-          if (operator === "*") {
-            numbers[numbers.length - 1] *= number;
-          } else if (operator === "/") {
-            if (number === 0) {
-              throw new Error("Không thể chia cho 0");
-            }
-            numbers[numbers.length - 1] /= number;
-          } else {
-            numbers.push(operator === "+" ? number : -number);
-          }
-        }
-
-        return numbers.reduce((total, number) => total + number, 0);
-      }
-
-      function appendValue(value) {
-        const currentText = display.innerText;
-
-        if (currentText === "Lỗi") {
-          display.innerText = operators.includes(value) ? "0" + value : value;
-          return;
-        }
-
-        if (operators.includes(value)) {
-          if (operators.includes(currentText.slice(-1))) {
-            display.innerText = currentText.slice(0, -1) + value;
-          } else {
-            display.innerText += value;
-          }
-          return;
-        }
-
-        if (value === ".") {
-          const currentNumber = currentText.split(/[+\-*/]/).pop();
-          if (currentNumber.includes(".")) {
-            return;
-          }
-        }
-
-        display.innerText = currentText === "0" ? value : currentText + value;
-      }
-
-      function resetCalculator() {
-        display.innerText = "0";
-      }
-
-      function deleteLastCharacter() {
-        display.innerText =
-          display.innerText.length > 1 ? display.innerText.slice(0, -1) : "0";
-      }
-
-      function showResult() {
-        try {
-          const result = calculate(display.innerText);
-          display.innerText = Number.isFinite(result) ? String(result) : "Lỗi";
-        } catch (error) {
-          display.innerText = "Lỗi";
-        }
-      }
-
-      buttons.forEach((button) => {
+      // 1. Nhập số và toán tử
+      inputButtons.forEach(function (button) {
         button.addEventListener("click", function () {
-          const value = this.innerText;
+          const char = button.innerText;
 
-          if (value === "Clear") {
-            resetCalculator();
-          } else if (value === "⌫") {
-            deleteLastCharacter();
-          } else if (value === "=") {
-            showResult();
+          if (display.innerText === "0" || display.innerText === "Lỗi") {
+            if (char === ".") {
+              display.innerText = "0.";
+            } else {
+              display.innerText = char;
+            }
           } else {
-            appendValue(value);
+            display.innerText = display.innerText + char;
           }
         });
       });
 
-      document.addEventListener("keydown", function (event) {
-        const key = event.key;
+      // 2. Nút Clear: xóa toàn bộ về 0
+      btnClear.addEventListener("click", function () {
+        display.innerText = "0";
+      });
 
-        if (/\d|\./.test(key) || operators.includes(key)) {
-          appendValue(key);
-        } else if (key === "Enter" || key === "=") {
-          showResult();
-        } else if (key === "Backspace") {
-          deleteLastCharacter();
-        } else if (key === "Escape") {
-          resetCalculator();
+      // 3. Nút DEL: xóa từng ký tự một từ cuối chuỗi
+      btnDelete.addEventListener("click", function () {
+        const currentText = display.innerText;
+
+        // Nếu đang báo lỗi hoặc chuỗi chỉ còn 1 ký tự thì bấm xóa sẽ về 0
+        if (currentText === "Lỗi" || currentText.length <= 1) {
+          display.innerText = "0";
         } else {
+          // Cắt bỏ ký tự cuối cùng
+          display.innerText = currentText.slice(0, -1);
+        }
+      });
+
+      // 4. Nút =: tính toán kết quả
+      btnEqual.addEventListener("click", function () {
+        const expression = display.innerText;
+
+        if (expression === "" || expression === "Lỗi") {
           return;
         }
 
-        event.preventDefault();
+        try {
+          const calculate = new Function("return " + expression);
+          const result = calculate();
+
+          if (isFinite(result)) {
+            display.innerText = result;
+          } else {
+            display.innerText = "Lỗi";
+          }
+        } catch (error) {
+          display.innerText = "Lỗi";
+        }
       });
     </script>
   </body>
