@@ -2,170 +2,179 @@
 <html lang="vi">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Trang giới thiệu tương tác</title>
+    <title>Bài Thực Hành 1 - Trang Cá Nhân Tương Tác</title>
     <style>
       body {
-        font-family: Arial, sans-serif;
+        font-family: Arial, Helvetica, sans-serif;
         margin: 0;
         padding: 0;
-        min-height: 100vh;
-        background: linear-gradient(135deg, #dbeafe, #fce7f3, #fef3c7);
-        transition:
-          background-color 0.3s,
-          color 0.3s,
-          background 0.5s;
+        background-color: #f4f7f6;
+        color: #333333;
       }
-      header,
-      footer {
-        background: linear-gradient(135deg, #7c3aed, #db2777);
-        padding: 20px;
-        text-align: center;
-        color: white;
-      }
-      nav {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 8px;
-        padding: 8px;
-        background-color: #172554;
-      }
-      nav a {
-        display: inline-block;
-        color: white;
-        text-align: center;
-        padding: 14px 16px;
-        text-decoration: none;
+
+      .container {
+        width: 750px;
+        margin: 20px auto;
+        background-color: #ffffff;
+        border: 1px solid #dddddd;
         border-radius: 8px;
-        transition: background-color 0.2s, transform 0.2s;
+        padding: 20px 30px;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
       }
-      nav a:hover {
-        background-color: #2563eb;
-        transform: translateY(-2px);
-      }
-      main {
-        width: min(760px, calc(100% - 32px));
-        margin: 32px auto;
-        padding: 42px 24px;
-        min-height: 300px;
+
+      header {
         text-align: center;
-        background-color: rgba(255, 255, 255, 0.85);
-        border: 1px solid rgba(124, 58, 237, 0.15);
-        border-radius: 20px;
-        box-shadow: 0 16px 35px rgba(30, 41, 59, 0.14);
+        border-bottom: 2px solid #0066cc;
+        padding-bottom: 15px;
+        margin-bottom: 15px;
       }
-      h1 {
+
+      header h1 {
         margin: 0;
-        font-size: clamp(2rem, 5vw, 3rem);
+        color: #0066cc;
       }
+
+      #greetingText {
+        color: #e67e22;
+        font-size: 18px;
+        font-weight: bold;
+        margin-top: 10px;
+      }
+
+      nav {
+        background-color: #eef2f7;
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      nav a {
+        color: #0066cc;
+        text-decoration: none;
+        font-weight: bold;
+        margin: 0 15px;
+      }
+
+      nav a:hover {
+        text-decoration: underline;
+      }
+
+      main {
+        line-height: 1.6;
+      }
+
+      section {
+        margin-bottom: 20px;
+      }
+
       h2 {
-        color: #7c3aed;
-        font-size: 1.6rem;
+        color: #333333;
+        border-left: 4px solid #0066cc;
+        padding-left: 8px;
+        margin-top: 0;
       }
-      p {
-        color: #475569;
-        line-height: 1.7;
-      }
-      button {
-        padding: 10px 20px;
-        font-size: 16px;
-        cursor: pointer;
-        background: linear-gradient(135deg, #2563eb, #7c3aed);
+
+      #btnChangeColor {
+        background-color: #0066cc;
         color: white;
         border: none;
-        border-radius: 10px;
+        padding: 10px 18px;
+        font-size: 14px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      #btnChangeColor:hover {
+        background-color: #004c99;
+      }
+
+      footer {
+        text-align: center;
+        border-top: 1px solid #dddddd;
+        padding-top: 15px;
         margin-top: 20px;
-        transition: transform 0.2s, box-shadow 0.2s;
-      }
-      button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 18px rgba(37, 99, 235, 0.3);
-      }
-      .dark-mode-header-footer {
-        background: linear-gradient(135deg, #111827, #312e81) !important;
-        color: white !important;
-      }
-      .dark-mode-main {
-        background-color: rgba(15, 23, 42, 0.92) !important;
-      }
-      .dark-mode-main h2,
-      .dark-mode-main p {
-        color: #e0e7ff !important;
-      }
-      @media (max-width: 520px) {
-        main {
-          width: min(100% - 20px, 760px);
-          margin: 20px auto;
-          padding: 30px 16px;
-        }
-        nav a {
-          padding: 10px 12px;
-        }
+        font-size: 13px;
+        color: #777777;
       }
     </style>
   </head>
-  <body>
-    <header id="myHeader">
-      <h1>Trang Cá Nhân Của Tôi</h1>
-    </header>
+  <body id="myBody">
+    <div class="container" id="myContainer">
+      <header>
+        <h1>Trang Giới Thiệu Cá Nhân</h1>
+        <p id="greetingText"></p>
+      </header>
 
-    <nav>
-      <a href="#">Trang chủ</a>
-      <a href="#">Giới thiệu</a>
-      <a href="#">Sở thích</a>
-    </nav>
+      <nav>
+        <a href="#about">Thông tin cá nhân</a>
+        <a href="#contact">Liên hệ</a>
+      </nav>
 
-    <main id="myMain">
-      <h2 id="welcomeMessage">Đang tải lời chào...</h2>
-      <p>Chào mừng bạn đến với trang giới thiệu tương tác.</p>
+      <main>
+        <section id="about">
+          <h2>Thông tin sinh viên</h2>
+          <p><strong>Họ và tên:</strong> Ngô Văn Huy</p>
+          <p>
+            <strong>Trường:</strong> Học viện Công nghệ Bưu chính Viễn thông
+            (PTIT)
+          </p>
+          <p><strong>Môn học:</strong> Lập trình Web</p>
+          <p>
+            <strong>Nội dung:</strong> Bài tập thực hành 1 - Thao tác DOM với
+            JavaScript.
+          </p>
+        </section>
 
-      <button id="colorButton">Đổi màu nền (Dark Mode)</button>
-    </main>
+        <section id="action">
+          <h2>Tương tác trang</h2>
+          <p>Nhấn nút bên dưới để chuyển đổi màu nền (Light / Dark Mode):</p>
+          <button id="btnChangeColor">Đổi màu nền</button>
+        </section>
+      </main>
 
-    <footer id="myFooter">
-      <p>Ngô Văn Huy _ B25DCTV029. Bài tập thực hành DOM.</p>
-    </footer>
+      <footer>
+        <p>Bài tập thực hành Lập trình Web PTIT</p>
+      </footer>
+    </div>
 
     <script>
-      const welcomeMessageElement = document.getElementById("welcomeMessage");
-      const currentHour = new Date().getHours();
+      var now = new Date();
+      var currentHour = now.getHours();
+      var greetingElement = document.getElementById("greetingText");
 
-      let greeting = "";
       if (currentHour < 12) {
-        greeting = "Chào buổi sáng! Chúc bạn ngày mới tốt lành.";
+        greetingElement.innerText =
+          "Chào buổi sáng! Chúc một ngày học tập vui vẻ.";
       } else if (currentHour < 18) {
-        greeting = "Chào buổi chiều! Chúc bạn làm việc hiệu quả.";
+        greetingElement.innerText =
+          "Chào buổi chiều! Chúc bạn hoàn thành tốt buổi học.";
       } else {
-        greeting = "Chào buổi tối! Chúc bạn một buổi tối thư giãn.";
+        greetingElement.innerText =
+          "Chào buổi tối! Chúc bạn có buổi tối thư giãn.";
       }
 
-      welcomeMessageElement.innerText = greeting;
+      var btn = document.getElementById("btnChangeColor");
+      var body = document.getElementById("myBody");
+      var container = document.getElementById("myContainer");
+      var isDark = false;
 
-      const colorButton = document.getElementById("colorButton");
-      const header = document.getElementById("myHeader");
-      const footer = document.getElementById("myFooter");
-      const main = document.getElementById("myMain");
-
-      let isDarkMode = false;
-
-      colorButton.addEventListener("click", function () {
-        if (!isDarkMode) {
-          document.body.style.background = "linear-gradient(135deg, #0f172a, #312e81, #701a75)";
-          document.body.style.color = "#fff";
-          header.classList.add("dark-mode-header-footer");
-          footer.classList.add("dark-mode-header-footer");
-          main.classList.add("dark-mode-main");
-          colorButton.innerText = "Trở về nền sáng";
+      btn.addEventListener("click", function () {
+        if (isDark == false) {
+          body.style.backgroundColor = "#1e1e1e";
+          container.style.backgroundColor = "#2d2d2d";
+          container.style.color = "#ffffff";
+          container.style.borderColor = "#444444";
+          btn.innerText = "Chuyển về nền sáng";
+          isDark = true;
         } else {
-          document.body.style.background = "linear-gradient(135deg, #dbeafe, #fce7f3, #fef3c7)";
-          document.body.style.color = "#1e293b";
-          header.classList.remove("dark-mode-header-footer");
-          footer.classList.remove("dark-mode-header-footer");
-          main.classList.remove("dark-mode-main");
-          colorButton.innerText = "Đổi màu nền (Dark Mode)";
+          body.style.backgroundColor = "#f4f7f6";
+          container.style.backgroundColor = "#ffffff";
+          container.style.color = "#333333";
+          container.style.borderColor = "#dddddd";
+          btn.innerText = "Đổi màu nền";
+          isDark = false;
         }
-        isDarkMode = !isDarkMode;
       });
     </script>
   </body>
